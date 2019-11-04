@@ -39,4 +39,8 @@ public class Tile {
 	public boolean isFlipped() {
 		return this.faceDown;
 	}
+	
+	public String getType() {
+		return this.type;
+	}
 }
