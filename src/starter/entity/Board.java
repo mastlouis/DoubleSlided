@@ -8,6 +8,12 @@ public class Board {
 	String[] symbols;
 	String printMessage;
 	
+	final static String SEPARATION = ",";
+	final static String FACEUP = "u";
+	final static String FACEDOWN = "d";
+	final static String NEWCOL = "*";
+	final static String NEWROW = "-";
+	
 	public Board(String configuration) {
 		this.configuration = configuration;
 		
@@ -116,5 +122,26 @@ public class Board {
 	
 	public String getPrintMessage() {
 		return this.printMessage;
+	}
+	
+	public String encodeTiles(Tile[][] tiles) {
+		String code = "";
+		for(int row = 0; row < tiles.length; row++) {
+			for(int col = 0; col < tiles[row].length; col++) {
+				code += tiles[row][col].front;
+				code += SEPARATION; //SEPARATION is ,
+				code += tiles[row][col].back;
+				code += SEPARATION;
+				if(tiles[row][col].isFlipped()) {
+					code += FACEDOWN; //FACEDOWN is d
+				}
+				else {
+					code += FACEUP; //FACEUP is u
+				}
+				code += NEWCOL;
+			}
+			code += NEWROW;
+		}
+		return code;
 	}
 }
