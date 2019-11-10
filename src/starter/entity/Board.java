@@ -9,11 +9,11 @@ public class Board {
 	String[] symbols;
 	String printMessage;
 	
-	final static String SEPARATION = ",";
-	final static String FACEUP = "u";
-	final static String FACEDOWN = "d";
-	final static String NEWCOL = "*";
-	final static String NEWROW = "-";
+	public final static String SEPARATION = ",";
+	public final static String FACEUP = "u";
+	public final static String FACEDOWN = "d";
+	public final static String NEWCOL = "*";
+	public final static String NEWROW = "-";
 	
 	final static String DEFAULT_CONFIGURATION = "default"; 
 	
@@ -25,15 +25,14 @@ public class Board {
 		this.configuration = configuration;
 		
 		if(configuration.equals("default")) {
-			this.rows = 3;
-			this.columns = 3;
-			this.tiles = new Tile[][] {
-	            {new Tile("1", "4", false), new Tile("4", "1", false), new Tile("", "", false)},
-	            {new Tile("1", "4", true), new Tile("3", "2", false), new Tile("4","1", false)},
-	            {new Tile("2", "3", true), new Tile("2", "3", false), new Tile("3", "2", false)}
-			};
-			this.symbols = new String[] {"", "1", "2", "3", "4"};
+			this.configuration = Model.CONFIGURATION_01;
 		}
+		else {
+			this.tiles = this.decodeTiles(this.configuration);
+			this.rows = tiles.length;
+			this.columns = tiles[0].length;
+		}
+		this.symbols = new String[] {"", "1", "2", "3", "4"};
 		this.printMessage = "";
 	}
 	
