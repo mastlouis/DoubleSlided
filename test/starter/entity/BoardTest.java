@@ -11,7 +11,7 @@ public class BoardTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		this.board = new Board("test");
+		this.board = new Board("default");
 	}
 
 	@Test

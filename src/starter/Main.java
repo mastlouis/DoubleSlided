@@ -12,7 +12,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		Model model = new Model("test");
+		Model model = new Model("default");
 		String code = model.getBoard().encodeTiles(model.getTiles());
 		System.out.println(code);
 		System.out.println(model.getBoard().encodeTiles(model.getBoard().decodeTiles(code)));

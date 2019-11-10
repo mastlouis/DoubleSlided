@@ -10,7 +10,7 @@ public class ModelTest {
 
 	@Before
 	public void setUp() throws Exception {
-		this.model = new Model("test");
+		this.model = new Model("default");
 	}
 	
 	@Test
