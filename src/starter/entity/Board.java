@@ -1,4 +1,5 @@
 package starter.entity;
+import java.util.LinkedList;
 
 public class Board {
 	Tile[][] tiles;
@@ -14,10 +15,16 @@ public class Board {
 	final static String NEWCOL = "*";
 	final static String NEWROW = "-";
 	
+	final static String DEFAULT_CONFIGURATION = "default"; 
+	
+	public final int COLLECTFRONT = 0;
+	public final int COLLECTBACK = 1;
+	public final int COLLECTFLIP = 2;
+	
 	public Board(String configuration) {
 		this.configuration = configuration;
 		
-//		if(configuration.equals("default")) {
+		if(configuration.equals("default")) {
 			this.rows = 3;
 			this.columns = 3;
 			this.tiles = new Tile[][] {
@@ -26,7 +33,7 @@ public class Board {
 	            {new Tile("2", "3", true), new Tile("2", "3", false), new Tile("3", "2", false)}
 			};
 			this.symbols = new String[] {"", "1", "2", "3", "4"};
-//		}
+		}
 		this.printMessage = "";
 	}
 	
@@ -143,5 +150,58 @@ public class Board {
 			code += NEWROW;
 		}
 		return code;
+	}
+	
+	public Tile[][] decodeTiles(String code){
+		int rowIndex = 0;
+		int state = COLLECTFRONT;
+		
+		String frontOfTile = "";
+		String backOfTile = "";
+		boolean flipState = false;
+		LinkedList<LinkedList<Tile>> tileRows = new LinkedList<LinkedList<Tile>>();
+		tileRows.add(new LinkedList<Tile>()); //Create an empty first column of the first row
+		for(int i = 0; i < code.length(); i++) {
+			if(code.substring(i,i + 1).equals(SEPARATION)) {
+				if(state == COLLECTFRONT) state = COLLECTBACK;
+				else if(state == COLLECTBACK) state = COLLECTFLIP; 
+				//Be very careful to keep this as an else if
+				//Otherwise, the state will continue to fall through
+			}
+			else if(code.substring(i,i + 1).equals(NEWCOL)) {
+				tileRows.get(rowIndex).add(new Tile(frontOfTile, backOfTile, flipState));
+				frontOfTile = "";
+				backOfTile = "";
+				state = COLLECTFRONT;
+			}
+			else if(code.substring(i,i + 1).equals(NEWROW) && i < code.length() - 1) {
+				//Add a new row if there is another row
+				tileRows.add(new LinkedList<Tile>());
+				rowIndex++;
+			}
+			//Since the character is not special, add it to the appropriate value
+			else if(state == COLLECTFRONT) {
+				frontOfTile += code.substring(i,i + 1);
+			}
+			else if(state == COLLECTBACK) {
+				backOfTile += code.substring(i,i + 1);
+			}
+			else if(state == COLLECTFLIP) {
+				if(code.substring(i,i + 1).equals(FACEUP)) flipState = false;
+				else if(code.substring(i,i + 1).equals(FACEDOWN)) flipState = true;
+			}
+		}
+		return listToArray(tileRows);
+	}
+	
+	public Tile[][] listToArray(LinkedList<LinkedList<Tile>> lists){
+		Tile[][] outputArray = new Tile[lists.size()][];
+		for(int i = 0; i < outputArray.length; i++) {
+			outputArray[i] = new Tile[lists.get(i).size()];
+			for(int j = 0; j < outputArray[i].length; j++){
+				outputArray[i][j] = lists.get(i).get(j);
+			}
+		}
+		return outputArray;
 	}
 }
