@@ -6,11 +6,6 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import starter.controller.MoveTileController;
-import starter.controller.ResetController;
-import starter.entity.Model;
-
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JMenuBar;
@@ -20,16 +15,13 @@ import javax.swing.JMenuItem;
 public class App extends JFrame {
 
 	private JPanel contentPane;
-	Model model;
-	PuzzlePanel panel;
 
 	/**
 	 * Create the frame.
 	 */
-	public App(Model model) {
-//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+	public App() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 650, 410);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -39,42 +31,43 @@ public class App extends JFrame {
 		
 		JMenuItem mntmReset = new JMenuItem("Reset");
 		mnGame.add(mntmReset);
+		
+		JMenuItem mntmSeeSolvedPuzzle = new JMenuItem("See Solved Puzzle");
+		mnGame.add(mntmSeeSolvedPuzzle);
+		
+		JMenu mnChangeConfiguration = new JMenu("Change Configuration");
+		mnGame.add(mnChangeConfiguration);
+		
+		JMenuItem mntmConfiguration = new JMenuItem("Configuration 01");
+		mnChangeConfiguration.add(mntmConfiguration);
+		
+		JMenuItem mntmConfiguration_1 = new JMenuItem("Configuration 234");
+		mnChangeConfiguration.add(mntmConfiguration_1);
+		
+		JMenuItem mntmConfiguration_2 = new JMenuItem("Configuration 56");
+		mnChangeConfiguration.add(mntmConfiguration_2);
+		
+		JMenuItem mntmConfiguration_3 = new JMenuItem("Configuration 789");
+		mnChangeConfiguration.add(mntmConfiguration_3);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		/*
-		 * This is the part that we mess with
-		 */
-		
-//		JPanel panel = new JPanel();
-		this.model = model;
-		this.panel = new PuzzlePanel(this.model);
-		MoveTileController mtc = new MoveTileController(this.model, this);
-		panel.addMouseListener(mtc);
-		ResetController rc = new ResetController(this.model, this);
-		mntmReset.addActionListener(rc);
-		/*
-		 * This concludes the part that we mess with
-		 */
+		JPanel panel = new JPanel();
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
+				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 628, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
-					.addContainerGap())
+				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE))
 		);
 		contentPane.setLayout(gl_contentPane);
-	}
-	
-	public PuzzlePanel getPanel() {
-		return this.panel;
 	}
 }
