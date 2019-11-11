@@ -14,21 +14,14 @@ import starter.entity.Tile;
 public class PuzzlePanel extends JPanel {
 	Model model;
 	Rectangle[][] rectangles = null;
+	Tile[][] tiles;
 	
 	/**
 	 * Create the panel.
 	 */
 	public PuzzlePanel(Model model) {
 		this.model = model;
-	}
-
-	@Override
-	public void paintComponent(Graphics g) {
-		Tile[][] tiles = model.getTiles();
-//		Tile tile = model.getTile();
-//		Rectangle r = tile.getRectangle();
-		
-		//Fill the rectangle array if it isn't already there
+		this.tiles = model.getTiles();
 		if(rectangles == null) {
 			this.rectangles = new Rectangle[tiles.length][tiles[1].length];
 			for(int row = 0; row < tiles.length; row++) {
@@ -37,6 +30,23 @@ public class PuzzlePanel extends JPanel {
 				}
 			}
 		}
+	}
+
+	@Override
+	public void paintComponent(Graphics g) {
+//		Tile[][] tiles = model.getTiles();
+//		Tile tile = model.getTile();
+//		Rectangle r = tile.getRectangle();
+		
+		//Fill the rectangle array if it isn't already there
+//		if(rectangles == null) {
+//			this.rectangles = new Rectangle[tiles.length][tiles[1].length];
+//			for(int row = 0; row < tiles.length; row++) {
+//				for(int col = 0; col < tiles[row].length; col++) {
+//					rectangles[row][col] = new Rectangle(50 + (120 * col), 50 + (120 * row), 100, 100);
+//				}
+//			}
+//		}
 		g.setFont(new Font("Georgia", 0, 18));//0 is for PLAIN, but the constant isn't working
 		//Draw the move counter
 		g.drawString("Moves Made: " + this.model.getMoves() + "  " + this.model.getBoard().getPrintMessage(), 30, 30);

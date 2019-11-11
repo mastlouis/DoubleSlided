@@ -24,15 +24,24 @@ public class MoveTileController extends MouseAdapter{
 	@Override
 	public void mousePressed(MouseEvent me) {
 		Point p = me.getPoint();
+		interactWithPoint(p);
+		app.repaint();
+//		System.out.println(model.getBoard().getEncodedTiles());
+	}
+	
+	public void interactWithPoint(Point p) {
+		System.out.println("Point Pressed: " + p.getX() + ", " + p.getY());
 		rectangles = app.getPanel().getRectangles();
 		tiles = model.getBoard().getTiles();
 		for(int row = 0; row < rectangles.length; row++) {
 			for(int col = 0; col < rectangles[row].length; col++){
 				//If the user successfully presesd on a rectangle and can make a move
-				if(!model.getBoard().gameIsLost() 
-						&& !model.getBoard().gameIsWon()
-						&& rectangles[row][col].contains(p) 
-						&& model.getBoard().isValidMove(row, col)) {
+				if(
+					!model.getBoard().gameIsLost()
+					&& !model.getBoard().gameIsWon()
+					&& rectangles[row][col].contains(p) 
+					&& model.getBoard().isValidMove(row, col)
+				){
 					tiles[row][col].setFlip(!tiles[row][col].isFlipped()); //Flip the tile
 					this.model.getBoard().swapWithBlank(row, col); //Swap its place
 					model.incrementMoves();
@@ -48,7 +57,5 @@ public class MoveTileController extends MouseAdapter{
 			//Check that the player has actually won and not just started in the victory state
 			model.getBoard().setPrintMessage("You did the thing!! Nice work!!");
 		}
-		app.repaint();
-		
 	}
 }

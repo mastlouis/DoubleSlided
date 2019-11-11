@@ -43,4 +43,9 @@ public class Tile {
 	public String getType() {
 		return this.type;
 	}
+	
+	public boolean toggleFlip() {
+		this.faceDown = !this.faceDown;
+		return this.faceDown;
+	}
 }

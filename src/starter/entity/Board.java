@@ -149,6 +149,10 @@ public class Board {
 		return code;
 	}
 	
+	public String getEncodedTiles() {
+		return encodeTiles(this.tiles);
+	}
+	
 	public Tile[][] decodeTiles(String code){
 		int rowIndex = 0;
 		int state = COLLECTFRONT;
