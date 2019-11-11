@@ -66,9 +66,6 @@ public class PuzzlePanel extends JPanel {
 				}
 			}
 		}
-		
-//		g.drawString("Hello", 100, 100);
-//		g.drawLine(10, 10, 300, 50);
 	}
 	
 	public Rectangle[][] getRectangles(){

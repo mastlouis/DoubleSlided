@@ -8,6 +8,7 @@ public class Board {
 	String configuration;
 	String[] symbols;
 	String printMessage;
+	//printMessage is a message that the GUI will display to the user
 	
 	public final static String SEPARATION = ",";
 	public final static String FACEUP = "u";
@@ -86,6 +87,11 @@ public class Board {
 		return false;
 	}
 	
+	/**
+	 * This method checks whether or not the board is in a winning configuration
+	 * 
+	 * @return true if the user has won, false otherwise
+	 */
 	public boolean gameIsWon() {
 		//This could possibly be extended with a string that represents the victory configuration
 		boolean victory = true;
@@ -128,13 +134,20 @@ public class Board {
 		return this.printMessage;
 	}
 	
+	/**
+	 * This converts the grid of tiles into a string representation that can be
+	 * parsed back into an array of tiles
+	 * 
+	 * @param tiles is the 2Darray of tiles to encode
+	 * @return the string representation of the tiles
+	 */
 	public String encodeTiles(Tile[][] tiles) {
 		String code = "";
 		for(int row = 0; row < tiles.length; row++) {
 			for(int col = 0; col < tiles[row].length; col++) {
-				code += tiles[row][col].front;
+				code += tiles[row][col].front; //Add the front text
 				code += SEPARATION; //SEPARATION is ,
-				code += tiles[row][col].back;
+				code += tiles[row][col].back; //Add the back text
 				code += SEPARATION;
 				if(tiles[row][col].isFlipped()) {
 					code += FACEDOWN; //FACEDOWN is d
@@ -142,9 +155,9 @@ public class Board {
 				else {
 					code += FACEUP; //FACEUP is u
 				}
-				code += NEWCOL;
+				code += NEWCOL; //NEWCOL is *
 			}
-			code += NEWROW;
+			code += NEWROW; //NEWROW is -
 		}
 		return code;
 	}
@@ -153,6 +166,12 @@ public class Board {
 		return encodeTiles(this.tiles);
 	}
 	
+	/**
+	 * This converts a string representation of tiles into a 2D array of tiles
+	 * 
+	 * @param code is the string representation to convert
+	 * @return the 2D array of tiles that corresponds to the string
+	 */
 	public Tile[][] decodeTiles(String code){
 		int rowIndex = 0;
 		int state = COLLECTFRONT;
@@ -162,6 +181,9 @@ public class Board {
 		boolean flipState = false;
 		LinkedList<LinkedList<Tile>> tileRows = new LinkedList<LinkedList<Tile>>();
 		tileRows.add(new LinkedList<Tile>()); //Create an empty first column of the first row
+		
+		//Iterate through each character and either write it to tile data 
+		//or use it as a signal to manipulate the state of the linked lists
 		for(int i = 0; i < code.length(); i++) {
 			if(code.substring(i,i + 1).equals(SEPARATION)) {
 				if(state == COLLECTFRONT) state = COLLECTBACK;
@@ -195,6 +217,12 @@ public class Board {
 		return listToArray(tileRows);
 	}
 	
+	/**
+	 * Converts a 2D linked list of tiles into a 2D array of tiles
+	 * 
+	 * @param lists is the 2D linked list
+	 * @return a 2D array of tiles converted from a 2D linked list
+	 */
 	public Tile[][] listToArray(LinkedList<LinkedList<Tile>> lists){
 		Tile[][] outputArray = new Tile[lists.size()][];
 		for(int i = 0; i < outputArray.length; i++) {

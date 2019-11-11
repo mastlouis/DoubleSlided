@@ -26,16 +26,15 @@ public class MoveTileController extends MouseAdapter{
 		Point p = me.getPoint();
 		interactWithPoint(p);
 		app.repaint();
-//		System.out.println(model.getBoard().getEncodedTiles());
 	}
 	
 	public void interactWithPoint(Point p) {
-		System.out.println("Point Pressed: " + p.getX() + ", " + p.getY());
+//		System.out.println("Point Pressed: " + p.getX() + ", " + p.getY());
 		rectangles = app.getPanel().getRectangles();
 		tiles = model.getBoard().getTiles();
 		for(int row = 0; row < rectangles.length; row++) {
 			for(int col = 0; col < rectangles[row].length; col++){
-				//If the user successfully presesd on a rectangle and can make a move
+				//If the user successfully pressed on a rectangle and can make a move
 				if(
 					!model.getBoard().gameIsLost()
 					&& !model.getBoard().gameIsWon()
@@ -49,7 +48,7 @@ public class MoveTileController extends MouseAdapter{
 				}
 			}
 		}
-		//After the move is made, if any, check if the user has won
+		//After the move is made, if any, check if the user has won or lost
 		if(model.getBoard().gameIsLost()) {
 			model.getBoard().setPrintMessage("Four tiles display the same number. Let the tears flow.");
 		}

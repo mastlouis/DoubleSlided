@@ -12,7 +12,6 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-//		Model model = new Model("1,4,u*2,3,u*3,2,u*-1,4,d*,,u*4,1,u*-2,3,d*3,2,u*4,1,u*-");
 		Model model = new Model("default");
 		App app = new App(model);
 		app.addWindowListener(new WindowAdapter(){
