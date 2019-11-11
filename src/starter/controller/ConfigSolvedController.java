@@ -21,6 +21,7 @@ public class ConfigSolvedController implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		model.resetGameTo(Model.VICTORY_CONFIGURATION);
+		model.getBoard().setPrintMessage("This is what the board might look like if you had actually tried.");
 		app.repaint();
 	}
 

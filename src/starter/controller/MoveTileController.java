@@ -23,7 +23,6 @@ public class MoveTileController extends MouseAdapter{
 	
 	@Override
 	public void mousePressed(MouseEvent me) {
-		System.out.println("Mouse pressed!");
 		Point p = me.getPoint();
 		rectangles = app.getPanel().getRectangles();
 		tiles = model.getBoard().getTiles();
@@ -34,9 +33,8 @@ public class MoveTileController extends MouseAdapter{
 						&& !model.getBoard().gameIsWon()
 						&& rectangles[row][col].contains(p) 
 						&& model.getBoard().isValidMove(row, col)) {
-					System.out.println("User Pressed Square " + row + ", " + col);
 					tiles[row][col].setFlip(!tiles[row][col].isFlipped()); //Flip the tile
-					this.model.getBoard().swapWithBlank(row, col);//Swap its place
+					this.model.getBoard().swapWithBlank(row, col); //Swap its place
 					model.incrementMoves();
 					break;
 				}
@@ -46,7 +44,8 @@ public class MoveTileController extends MouseAdapter{
 		if(model.getBoard().gameIsLost()) {
 			model.getBoard().setPrintMessage("Four tiles display the same number. Let the tears flow.");
 		}
-		if(model.getBoard().gameIsWon()) {
+		if(model.getBoard().gameIsWon() && this.model.getMoves() > 0) {
+			//Check that the player has actually won and not just started in the victory state
 			model.getBoard().setPrintMessage("You did the thing!! Nice work!!");
 		}
 		app.repaint();

@@ -27,11 +27,9 @@ public class Board {
 		if(configuration.equals("default")) {
 			this.configuration = Model.CONFIGURATION_01;
 		}
-		else {
-			this.tiles = this.decodeTiles(this.configuration);
-			this.rows = tiles.length;
-			this.columns = tiles[0].length;
-		}
+		this.tiles = this.decodeTiles(this.configuration);
+		this.rows = tiles.length;
+		this.columns = tiles[0].length;
 		this.symbols = new String[] {"", "1", "2", "3", "4"};
 		this.printMessage = "";
 	}

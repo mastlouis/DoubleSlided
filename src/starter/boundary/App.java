@@ -32,7 +32,7 @@ public class App extends JFrame {
 	 * Create the frame.
 	 */
 	public App(Model model) {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 650, 410);
 		
 		JMenuBar menuBar = new JMenuBar();
