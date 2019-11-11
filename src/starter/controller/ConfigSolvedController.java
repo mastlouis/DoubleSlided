@@ -8,19 +8,19 @@ import javax.swing.JMenuItem;
 import starter.boundary.App;
 import starter.entity.Model;
 
-public class Config789Controller implements ActionListener{
+public class ConfigSolvedController implements ActionListener{
 	Model model;
 	App app;
 	JMenuItem mntm;
 	
-	public Config789Controller(Model model, App app) {
+	public ConfigSolvedController(Model model, App app) {
 		this.model = model;
 		this.app = app;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		model.resetGameTo(Model.CONFIGURATION_789);
+		model.resetGameTo(Model.VICTORY_CONFIGURATION);
 		app.repaint();
 	}
 

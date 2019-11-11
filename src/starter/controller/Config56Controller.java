@@ -20,7 +20,7 @@ public class Config56Controller implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		model.resetGameTo(Model.CONFIGURATION_01);
+		model.resetGameTo(Model.CONFIGURATION_56);
 		app.repaint();
 	}
 

@@ -7,6 +7,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import starter.controller.Config01Controller;
+import starter.controller.Config234Controller;
+import starter.controller.Config56Controller;
+import starter.controller.Config789Controller;
+import starter.controller.ConfigSolvedController;
 import starter.controller.MoveTileController;
 import starter.controller.ResetController;
 import starter.entity.Model;
@@ -19,7 +24,8 @@ import javax.swing.JMenuItem;
 
 public class App extends JFrame {
 
-	private PuzzlePanel contentPane;
+	private JPanel contentPane;
+	private PuzzlePanel panel;
 	Model model;
 	
 	/**
@@ -60,21 +66,28 @@ public class App extends JFrame {
 		 * This is the part that we mess with
 		 */
 		
-//		JPanel panel = new JPanel();
 		this.model = model;
-		this.contentPane = new PuzzlePanel(this.model);
+		this.panel = new PuzzlePanel(this.model);
 		MoveTileController mtc = new MoveTileController(this.model, this);
-		contentPane.addMouseListener(mtc);
+		panel.addMouseListener(mtc);
 		ResetController rc = new ResetController(this.model, this);
 		mntmReset.addActionListener(rc);
+		mntmSeeSolvedPuzzle.addActionListener(new ConfigSolvedController(this.model, this));
+		mntmConfiguration.addActionListener(new Config01Controller(this.model, this));;
+		mntmConfiguration_1.addActionListener(new Config234Controller(this.model, this));;
+		mntmConfiguration_2.addActionListener(new Config56Controller(this.model, this));;
+		mntmConfiguration_3.addActionListener(new Config789Controller(this.model, this));;
+		
+		contentPane = new JPanel();
 		/*
 		 * This concludes the part that we mess with
 		 */
 		
+
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		JPanel panel = new JPanel();
+//		JPanel panel = new JPanel();
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -93,6 +106,6 @@ public class App extends JFrame {
 	}
 	
 	public PuzzlePanel getPanel() {
-		return this.contentPane;
+		return this.panel;
 	}
 }
