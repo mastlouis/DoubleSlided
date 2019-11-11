@@ -6,6 +6,11 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import starter.controller.MoveTileController;
+import starter.controller.ResetController;
+import starter.entity.Model;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JMenuBar;
@@ -14,12 +19,13 @@ import javax.swing.JMenuItem;
 
 public class App extends JFrame {
 
-	private JPanel contentPane;
-
+	private PuzzlePanel contentPane;
+	Model model;
+	
 	/**
 	 * Create the frame.
 	 */
-	public App() {
+	public App(Model model) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 650, 410);
 		
@@ -49,7 +55,22 @@ public class App extends JFrame {
 		
 		JMenuItem mntmConfiguration_3 = new JMenuItem("Configuration 789");
 		mnChangeConfiguration.add(mntmConfiguration_3);
-		contentPane = new JPanel();
+		
+		/*
+		 * This is the part that we mess with
+		 */
+		
+//		JPanel panel = new JPanel();
+		this.model = model;
+		this.contentPane = new PuzzlePanel(this.model);
+		MoveTileController mtc = new MoveTileController(this.model, this);
+		contentPane.addMouseListener(mtc);
+		ResetController rc = new ResetController(this.model, this);
+		mntmReset.addActionListener(rc);
+		/*
+		 * This concludes the part that we mess with
+		 */
+		
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
@@ -69,5 +90,9 @@ public class App extends JFrame {
 					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE))
 		);
 		contentPane.setLayout(gl_contentPane);
+	}
+	
+	public PuzzlePanel getPanel() {
+		return this.contentPane;
 	}
 }
