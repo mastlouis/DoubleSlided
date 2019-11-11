@@ -22,35 +22,27 @@ public class PuzzlePanel extends JPanel {
 	public PuzzlePanel(Model model) {
 		this.model = model;
 		this.tiles = model.getTiles();
-		if(rectangles == null) {
-			this.rectangles = new Rectangle[tiles.length][tiles[1].length];
-			for(int row = 0; row < tiles.length; row++) {
-				for(int col = 0; col < tiles[row].length; col++) {
-					rectangles[row][col] = new Rectangle(50 + (120 * col), 50 + (120 * row), 100, 100);
-				}
+		this.rectangles = new Rectangle[tiles.length][tiles[1].length];
+		for(int row = 0; row < tiles.length; row++) {
+			for(int col = 0; col < tiles[row].length; col++) {
+				rectangles[row][col] = new Rectangle(50 + (120 * col), 50 + (120 * row), 100, 100);
 			}
 		}
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
-//		Tile[][] tiles = model.getTiles();
-//		Tile tile = model.getTile();
-//		Rectangle r = tile.getRectangle();
-		
-		//Fill the rectangle array if it isn't already there
-//		if(rectangles == null) {
-//			this.rectangles = new Rectangle[tiles.length][tiles[1].length];
-//			for(int row = 0; row < tiles.length; row++) {
-//				for(int col = 0; col < tiles[row].length; col++) {
-//					rectangles[row][col] = new Rectangle(50 + (120 * col), 50 + (120 * row), 100, 100);
-//				}
-//			}
-//		}
-		g.setFont(new Font("Georgia", 0, 18));//0 is for PLAIN, but the constant isn't working
+		this.tiles = model.getTiles();
+		this.rectangles = new Rectangle[tiles.length][tiles[1].length];
+		for(int row = 0; row < tiles.length; row++) {
+			for(int col = 0; col < tiles[row].length; col++) {
+				rectangles[row][col] = new Rectangle(50 + (120 * col), 50 + (120 * row), 100, 100);
+			}
+		}
+		g.setFont(new Font("Georgia", Font.PLAIN, 18));
 		//Draw the move counter
 		g.drawString("Moves Made: " + this.model.getMoves() + "  " + this.model.getBoard().getPrintMessage(), 30, 30);
-		g.setFont(new Font("Georgia", 0, 48));
+		g.setFont(new Font("Georgia", Font.PLAIN, 48));
 		//Draw the rectangles and grid
 		for(int row = 0; row < rectangles.length; row++) {
 			for(int col = 0; col < rectangles[row].length; col++) {

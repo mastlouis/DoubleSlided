@@ -6,6 +6,7 @@ import java.awt.Button;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,6 +25,7 @@ public class MoveTileControllerTest {
 		this.model = new Model("default");
 		this.app = new App(this.model);
 		this.mtc = new MoveTileController(this.model, this.app);
+		app.setVisible(true);
 	}
 
 	@Test
@@ -62,4 +64,9 @@ public class MoveTileControllerTest {
 		assertTrue(this.model.getBoard().gameIsWon());
 	}
 
+	@After
+	public void tearDown() throws Exception{
+		app.setVisible(false);
+		app.dispose();
+	}
 }
