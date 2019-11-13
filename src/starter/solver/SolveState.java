@@ -13,6 +13,13 @@ public class SolveState {
 		this.movesToArriveHere = movesToArriveHere; 
 	}
 	
+	public SolveState(String boardState, String movesToArriveHere, int row, int col) {
+		this.boardState = boardState;
+		this.movesToArriveHere = movesToArriveHere; 
+		this.blankSquareRow = row;
+		this.blankSquareCol = col;
+	}
+	
 	public void setBlankSquare(int row, int col) {
 		this.blankSquareRow = row;
 		this.blankSquareCol = col;

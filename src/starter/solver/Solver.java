@@ -42,7 +42,7 @@ public class Solver {
 					return currentState.getMovesToArriveHere() + "D";
 				}
 				if(!dummyModel.getBoard().gameIsLost()) {
-					theQueue.append(new SolveState(dummyModel.getBoard().getEncodedTiles(), currentState.getMovesToArriveHere() + "D"));
+					theQueue.append(new SolveState(dummyModel.getBoard().getEncodedTiles(), currentState.getMovesToArriveHere() + "D", blankRow - 1, blankCol));
 				}
 			}
 			
@@ -60,7 +60,7 @@ public class Solver {
 					return currentState.getMovesToArriveHere() + "L";
 				}
 				if(!dummyModel.getBoard().gameIsLost()) {
-					theQueue.append(new SolveState(dummyModel.getBoard().getEncodedTiles(), currentState.getMovesToArriveHere() + "L"));
+					theQueue.append(new SolveState(dummyModel.getBoard().getEncodedTiles(), currentState.getMovesToArriveHere() + "L", blankRow, blankCol - 1));
 				}
 				
 			}
@@ -79,7 +79,7 @@ public class Solver {
 					return currentState.getMovesToArriveHere() + "R";
 				}
 				if(!dummyModel.getBoard().gameIsLost()) {
-					theQueue.append(new SolveState(dummyModel.getBoard().getEncodedTiles(), currentState.getMovesToArriveHere() + "R"));
+					theQueue.append(new SolveState(dummyModel.getBoard().getEncodedTiles(), currentState.getMovesToArriveHere() + "R", blankRow, blankCol + 1));
 				}
 			}
 			
@@ -97,7 +97,7 @@ public class Solver {
 					return currentState.getMovesToArriveHere() + "U";
 				}
 				if(!dummyModel.getBoard().gameIsLost()) {
-					theQueue.append(new SolveState(dummyModel.getBoard().getEncodedTiles(), currentState.getMovesToArriveHere() + "U"));
+					theQueue.append(new SolveState(dummyModel.getBoard().getEncodedTiles(), currentState.getMovesToArriveHere() + "U", blankRow+1, blankCol));
 				}
 			}
 		}
