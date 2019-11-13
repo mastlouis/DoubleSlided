@@ -13,6 +13,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		Solver test = new Solver();
+		System.out.println(test.findSolution(Model.CONFIGURATION_789));
 		
 //		Model model = new Model("default");
 //		App app = new App(model);

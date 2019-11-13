@@ -19,7 +19,7 @@ public class Solver {
 		int blankRow = dummyModel.getBoard().getRowOfBlank();
 		int blankCol = dummyModel.getBoard().getColOfBlank();
 		
-		theQueue.append(new SolveState(configuration, ""));
+		theQueue.append(new SolveState(configuration, "", blankRow, blankCol));
 		
 		while(theQueue.hasNext()) {
 			SolveState currentState = theQueue.next();
@@ -35,6 +35,7 @@ public class Solver {
 					)
 			) {
 				dummyModel.resetGameTo(currentState.getBoardState());
+				dummyModel.getBoard().getTiles()[blankRow-1][blankCol].toggleFlip();
 				dummyModel.getBoard().swapWithBlank(blankRow - 1, blankCol);
 				if(dummyModel.getBoard().gameIsWon()) {
 					return currentState.getMovesToArriveHere() + "D";
@@ -44,40 +45,42 @@ public class Solver {
 				}
 			}
 			
-			//If there is a tile to move LEFT into the blank space
+			//If there is a tile to move RIGHT into the blank space
 			if(
 					blankCol > 0 
 					&& (
 							currentState.getMovesToArriveHere().length() == 0 //either there have been no moves
-							|| !currentState.getMovesToArriveHere().endsWith("R") //Or you didn't just move right
+							|| !currentState.getMovesToArriveHere().endsWith("L") //Or you didn't just move right
 					)
 			) {
 				dummyModel.resetGameTo(currentState.getBoardState());
+				dummyModel.getBoard().getTiles()[blankRow][blankCol-1].toggleFlip();
 				dummyModel.getBoard().swapWithBlank(blankRow, blankCol - 1);
-				if(dummyModel.getBoard().gameIsWon()) {
-					return currentState.getMovesToArriveHere() + "L";
-				}
-				if(!dummyModel.getBoard().gameIsLost()) {
-					theQueue.append(new SolveState(dummyModel.getBoard().getEncodedTiles(), currentState.getMovesToArriveHere() + "L", blankRow, blankCol - 1));
-				}
-				
-			}
-			
-			//If there is a tile to move RIGHT into the blank space
-			if(
-					blankCol < dummyModel.getBoard().getTiles()[blankRow].length - 1 
-					&& (
-							currentState.getMovesToArriveHere().length() == 0 //either there have been no moves
-							|| !currentState.getMovesToArriveHere().endsWith("L") //Or you didn't just move left
-					)
-			) {
-				dummyModel.resetGameTo(currentState.getBoardState());
-				dummyModel.getBoard().swapWithBlank(blankRow, blankCol + 1);
 				if(dummyModel.getBoard().gameIsWon()) {
 					return currentState.getMovesToArriveHere() + "R";
 				}
 				if(!dummyModel.getBoard().gameIsLost()) {
-					theQueue.append(new SolveState(dummyModel.getBoard().getEncodedTiles(), currentState.getMovesToArriveHere() + "R", blankRow, blankCol + 1));
+					theQueue.append(new SolveState(dummyModel.getBoard().getEncodedTiles(), currentState.getMovesToArriveHere() + "R", blankRow, blankCol - 1));
+				}
+				
+			}
+			
+			//If there is a tile to move LEFT into the blank space
+			if(
+					blankCol < dummyModel.getBoard().getTiles()[blankRow].length - 1 
+					&& (
+							currentState.getMovesToArriveHere().length() == 0 //either there have been no moves
+							|| !currentState.getMovesToArriveHere().endsWith("R") //Or you didn't just move left
+					)
+			) {
+				dummyModel.resetGameTo(currentState.getBoardState());
+				dummyModel.getBoard().getTiles()[blankRow][blankCol+1].toggleFlip();
+				dummyModel.getBoard().swapWithBlank(blankRow, blankCol + 1);
+				if(dummyModel.getBoard().gameIsWon()) {
+					return currentState.getMovesToArriveHere() + "L";
+				}
+				if(!dummyModel.getBoard().gameIsLost()) {
+					theQueue.append(new SolveState(dummyModel.getBoard().getEncodedTiles(), currentState.getMovesToArriveHere() + "L", blankRow, blankCol + 1));
 				}
 			}
 			
@@ -90,6 +93,7 @@ public class Solver {
 					)
 			) {
 				dummyModel.resetGameTo(currentState.getBoardState());
+				dummyModel.getBoard().getTiles()[blankRow+1][blankCol].toggleFlip();
 				dummyModel.getBoard().swapWithBlank(blankRow + 1, blankCol);
 				if(dummyModel.getBoard().gameIsWon()) {
 					return currentState.getMovesToArriveHere() + "U";
