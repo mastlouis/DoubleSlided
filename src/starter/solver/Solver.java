@@ -9,17 +9,15 @@ public class Solver {
 	Model model;
 	
 	public Solver() {
-		theQueue = new SolveStateQueue();
+		this.theQueue = new SolveStateQueue();
 		this.model = new Model("default");
 	}
 	
 	public String findSolution(String configuration) {
-		Model dummyModel = new Model(configuration);
-		model.resetGameTo(configuration);
-		Tile[][] tiles = model.getBoard().decodeTiles(configuration);
-		int blankRow = model.getBoard().getRowOfBlank();
-		int blankCol = model.getBoard().getColOfBlank();
 		SolveStateQueue theQueue = new SolveStateQueue();
+		Model dummyModel = new Model(configuration);
+		int blankRow = dummyModel.getBoard().getRowOfBlank();
+		int blankCol = dummyModel.getBoard().getColOfBlank();
 		
 		theQueue.append(new SolveState(configuration, ""));
 		
