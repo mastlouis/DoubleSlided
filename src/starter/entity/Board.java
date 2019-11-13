@@ -233,4 +233,26 @@ public class Board {
 		}
 		return outputArray;
 	}
+	
+	public int getRowOfBlank() {
+		for(int row = 0; row < tiles.length; row++) {
+			for(int col = 0; col < tiles[row].length; col++) {
+				if(tiles[row][col].isBlank()) {
+					return row;
+				}
+			}
+		}
+		return -1;
+	}
+	
+	public int getColOfBlank() {
+		for(int row = 0; row < tiles.length; row++) {
+			for(int col = 0; col < tiles[row].length; col++) {
+				if(tiles[row][col].isBlank()) {
+					return col;
+				}
+			}
+		}
+		return -1;
+	}
 }
