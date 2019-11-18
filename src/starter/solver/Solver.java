@@ -21,6 +21,7 @@ public class Solver {
 		int blankRow = dummyModel.getBoard().getRowOfBlank();
 		int blankCol = dummyModel.getBoard().getColOfBlank();
 		LinkedList<String> reachedStates = new LinkedList<String>();
+		int longestSoFar = 0;
 		
 		theQueue.append(new SolveState(configuration, "", blankRow, blankCol));
 		
@@ -28,6 +29,9 @@ public class Solver {
 			SolveState currentState = theQueue.next();
 			blankRow = currentState.getBlankSquareRow();
 			blankCol = currentState.getBlankSquareCol();
+			if(currentState.getMovesToArriveHere().length() > longestSoFar){
+				System.out.println("New Longest so far " + ++longestSoFar);
+			}
 			
 			//If there is a tile to move DOWN into the blank space
 			if(
