@@ -16,8 +16,9 @@ public class Solver {
 	}
 	
 	public String findSolution(String configuration) {
-		SolveStateQueue theQueue = new SolveStateQueue();
 		Model dummyModel = new Model(configuration);
+		if(dummyModel.getBoard().isSolvable()) return "no solution";
+		SolveStateQueue theQueue = new SolveStateQueue();
 		int blankRow = dummyModel.getBoard().getRowOfBlank();
 		int blankCol = dummyModel.getBoard().getColOfBlank();
 		LinkedList<String> reachedStates = new LinkedList<String>();

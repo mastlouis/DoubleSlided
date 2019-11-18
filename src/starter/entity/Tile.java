@@ -48,4 +48,8 @@ public class Tile {
 		this.faceDown = !this.faceDown;
 		return this.faceDown;
 	}
+	
+	public String getFrontSymbol() {
+		return this.front;
+	}
 }

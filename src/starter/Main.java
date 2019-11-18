@@ -15,6 +15,16 @@ public class Main {
 	public static void main(String[] args) {
 		ConfigurationGenerator cg = new ConfigurationGenerator(9);
 		ConfigurationGenerator parallel = new ConfigurationGenerator(8);
+		
+//		Model model = new Model(Model.CONFIGURATION_01);
+//		System.out.println(model.getBoard().isSolvable());
+//		model.resetGameTo(Model.CONFIGURATION_234);
+//		System.out.println(model.getBoard().isSolvable());
+//		model.resetGameTo(Model.CONFIGURATION_56);
+//		System.out.println(model.getBoard().isSolvable());
+//		model.resetGameTo(Model.CONFIGURATION_789);
+//		System.out.println(model.getBoard().isSolvable());
+		
 //		for(int i = 0; i < 6; i++)
 //			System.out.println(parallel.printer(parallel.nextPermutation()));
 //		for(int i = 0; i < 0x100; i++)

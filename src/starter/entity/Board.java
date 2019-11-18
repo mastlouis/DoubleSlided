@@ -255,4 +255,41 @@ public class Board {
 		}
 		return -1;
 	}
+	
+	public boolean isSolvable() {
+		for(int row = 0; row < tiles.length; row++) {
+			for(int col = 0; col < tiles.length; col++) {
+				//If it's an even space
+				if(tiles[row][col].isBlank()) continue;
+				if((row + col) % 2 == 0) {
+					//If it's faceup
+					if(
+							tiles[row][col].isFlipped()
+							&& !tiles[row][col].getFrontSymbol().equals("2")
+							&& !tiles[row][col].getFrontSymbol().equals("4")
+					) return false;
+					else if(
+							!tiles[row][col].isFlipped()
+							&& !tiles[row][col].getFrontSymbol().equals("1")
+							&& !tiles[row][col].getFrontSymbol().equals("3")
+					) return false;
+						
+				}
+				//if it's an odd space
+				else {
+					if(
+							!tiles[row][col].isFlipped()
+							&& !tiles[row][col].getFrontSymbol().equals("2")
+							&& !tiles[row][col].getFrontSymbol().equals("4")
+					) return false;
+					else if(
+							tiles[row][col].isFlipped()
+							&& !tiles[row][col].getFrontSymbol().equals("1")
+							&& !tiles[row][col].getFrontSymbol().equals("3")
+					) return false;
+				}
+			}
+		}
+		return true;
+	}
 }
