@@ -13,9 +13,14 @@ import starter.solver.Solver;
 public class Main {
 
 	public static void main(String[] args) {
-		ConfigurationGenerator cg = new ConfigurationGenerator();
-		int[] x = {1,2,3, 4, 5, 6, 7, 8, 9};
+		ConfigurationGenerator cg = new ConfigurationGenerator(3);
+		int[] x = {0,1,2};
 		cg.generatePermutation(x);
+		System.out.println("As above, so below");
+		for(int i = 0; i < 6; i++)
+			System.out.println(cg.printer(cg.nextPerumtation()));
+		
+		
 //		Solver test = new Solver();
 //		System.out.println(test.findSolution(Model.CONFIGURATION_789));
 		
