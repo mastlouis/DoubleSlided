@@ -1,9 +1,12 @@
 package starter.solver;
 
+import starter.entity.Board;
+
 public class ConfigurationGenerator {
 	int[] counters;
 	int[] elements;
 	int stackPointerSimulator;
+	int flipStates;
 	
 	public ConfigurationGenerator(int size){
 		this.elements = new int[size];
@@ -13,6 +16,8 @@ public class ConfigurationGenerator {
 			this.counters[i] = 0;
 		}
 		this.stackPointerSimulator = 0;
+		//Will be incremented before use
+		this.flipStates = -1;
 	}
 	
 	/**
@@ -53,7 +58,7 @@ public class ConfigurationGenerator {
 		}
 	}
 	
-	public int[] nextPerumtation() {
+	public int[] nextPermutation() {
 		while(this.counters[stackPointerSimulator] >= stackPointerSimulator) {
 			counters[stackPointerSimulator] = 0;
 			stackPointerSimulator = (stackPointerSimulator+1)%counters.length;
@@ -75,19 +80,60 @@ public class ConfigurationGenerator {
 		return this.elements;
 	}
 	
-	public String nextBoardState() {
+	private int[] nextValidPermutation() {
+		this.nextPermutation();
+		//Use partial ordering to remove redundant permutations
+		while(
+				this.elements[1] > this.elements[2]
+				|| this.elements[3] > this.elements[4]
+				|| this.elements[5] > this.elements[6]
+				|| this.elements[7] > this.elements[8]
+		) {
+			this.nextPermutation();
+		}
+		return this.elements;
+	}
+	
+	private int[] nextValidBoardState() {
+		if(this.flipStates >= 0xFF) {
+			//Will not be incremented before use
+			this.flipStates = 0;
+			return this.nextValidPermutation();
+		}
+		this.flipStates++;
+		return this.elements;
+	}
+	
+	public String getNextBoardState() {
 		String configuration = "";
 		
-		int[] permutation = this.nextPerumtation();
-		boolean isValidPermutation = false;
-		while(!isValidPermutation) {
-			isValidPermutation = true;
-			if(permutation[1] > permutation[2]) isValidPermutation = false;
-			else if(permutation[3] > permutation[4]) isValidPermutation = false;
-			else if(permutation[5] > permutation[6]) isValidPermutation = false;
-			else if(permutation[7] > permutation[8]) isValidPermutation = false;
-		}
+		int[] permutation = this.nextValidBoardState();
 		
+		//For each of the nine spaces on the board
+		for(int boardPositionNumber = 0; boardPositionNumber < 9; boardPositionNumber++) {
+			//Go through the permutation array to find which tile comes next
+			for(int tileIDNumber = 0; tileIDNumber < 9; tileIDNumber++) {
+				//When you have found the right tile to add to the configuration
+				if(permutation[tileIDNumber] == boardPositionNumber) {
+					//Add that tile's symbols
+					if(tileIDNumber == 0) configuration+= ",,u";
+					else if(tileIDNumber == 1 || tileIDNumber == 2) configuration += "1,4,";
+					else if(tileIDNumber == 3 || tileIDNumber == 4) configuration += "2,3,";
+					else if(tileIDNumber == 5 || tileIDNumber == 6) configuration += "3,2,";
+					else if(tileIDNumber == 7 || tileIDNumber == 8) configuration += "4,1,";
+					//Add the flip state, then the end of tile symbol
+					if(tileIDNumber != 0) {
+						boolean flip = (this.flipStates & (1<<(8-tileIDNumber))) != 0;
+						if(flip) {configuration += "d";}
+						else {configuration+= "u";}
+					}
+					configuration += Board.NEWCOL;
+					break;
+				}
+			}
+			//If this is the end of the row, add a row separator
+			if(boardPositionNumber % 3 == 2) configuration += Board.NEWROW;
+		}
 		
 		return configuration;
 	}

@@ -1,5 +1,7 @@
 package starter.solver;
 
+import java.util.LinkedList;
+
 import starter.entity.Board;
 import starter.entity.Model;
 import starter.entity.Tile;
@@ -18,6 +20,7 @@ public class Solver {
 		Model dummyModel = new Model(configuration);
 		int blankRow = dummyModel.getBoard().getRowOfBlank();
 		int blankCol = dummyModel.getBoard().getColOfBlank();
+		LinkedList<String> reachedStates = new LinkedList<String>();
 		
 		theQueue.append(new SolveState(configuration, "", blankRow, blankCol));
 		
@@ -29,7 +32,7 @@ public class Solver {
 			//If there is a tile to move DOWN into the blank space
 			if(
 					blankRow > 0 
-					&& (
+					&& (//Short circuit order matters
 							currentState.getMovesToArriveHere().length() == 0 //Either there have been no moves
 							|| !currentState.getMovesToArriveHere().endsWith("U") //Or you have not just moved up
 					)
@@ -40,7 +43,10 @@ public class Solver {
 				if(dummyModel.getBoard().gameIsWon()) {
 					return currentState.getMovesToArriveHere() + "D";
 				}
-				if(!dummyModel.getBoard().gameIsLost()) {
+				//If the new state is not a game over or a reached state
+				if(!dummyModel.getBoard().gameIsLost() && !reachedStates.contains(dummyModel.getBoard().getEncodedTiles())) {
+					//Add this state to the known states
+					reachedStates.add(dummyModel.getBoard().getEncodedTiles());
 					theQueue.append(new SolveState(dummyModel.getBoard().getEncodedTiles(), currentState.getMovesToArriveHere() + "D", blankRow - 1, blankCol));
 				}
 			}
@@ -48,7 +54,7 @@ public class Solver {
 			//If there is a tile to move RIGHT into the blank space
 			if(
 					blankCol > 0 
-					&& (
+					&& (//Short circuit order matters
 							currentState.getMovesToArriveHere().length() == 0 //either there have been no moves
 							|| !currentState.getMovesToArriveHere().endsWith("L") //Or you didn't just move right
 					)
@@ -59,7 +65,10 @@ public class Solver {
 				if(dummyModel.getBoard().gameIsWon()) {
 					return currentState.getMovesToArriveHere() + "R";
 				}
-				if(!dummyModel.getBoard().gameIsLost()) {
+				//If the new state is not a game over or a reached state
+				if(!dummyModel.getBoard().gameIsLost() && !reachedStates.contains(dummyModel.getBoard().getEncodedTiles())) {
+					//Add this state to the known states
+					reachedStates.add(dummyModel.getBoard().getEncodedTiles());
 					theQueue.append(new SolveState(dummyModel.getBoard().getEncodedTiles(), currentState.getMovesToArriveHere() + "R", blankRow, blankCol - 1));
 				}
 				
@@ -68,7 +77,7 @@ public class Solver {
 			//If there is a tile to move LEFT into the blank space
 			if(
 					blankCol < dummyModel.getBoard().getTiles()[blankRow].length - 1 
-					&& (
+					&& (//Short circuit order matters
 							currentState.getMovesToArriveHere().length() == 0 //either there have been no moves
 							|| !currentState.getMovesToArriveHere().endsWith("R") //Or you didn't just move left
 					)
@@ -79,7 +88,10 @@ public class Solver {
 				if(dummyModel.getBoard().gameIsWon()) {
 					return currentState.getMovesToArriveHere() + "L";
 				}
-				if(!dummyModel.getBoard().gameIsLost()) {
+				//If the new state is not a game over or a reached state
+				if(!dummyModel.getBoard().gameIsLost() && !reachedStates.contains(dummyModel.getBoard().getEncodedTiles())) {
+					//Add this state to the known states
+					reachedStates.add(dummyModel.getBoard().getEncodedTiles());
 					theQueue.append(new SolveState(dummyModel.getBoard().getEncodedTiles(), currentState.getMovesToArriveHere() + "L", blankRow, blankCol + 1));
 				}
 			}
@@ -87,7 +99,7 @@ public class Solver {
 			//If there is a tile to move UP into the blank space
 			if(
 					blankRow < dummyModel.getBoard().getTiles().length - 1 
-					&& (
+					&& (//Short circuit order matters
 							currentState.getMovesToArriveHere().length() == 0 //Either there have been no moves
 							|| !currentState.getMovesToArriveHere().endsWith("D") //Or you didn't just move down
 					)
@@ -98,7 +110,10 @@ public class Solver {
 				if(dummyModel.getBoard().gameIsWon()) {
 					return currentState.getMovesToArriveHere() + "U";
 				}
-				if(!dummyModel.getBoard().gameIsLost()) {
+				//If the new state is not a game over or a reached state
+				if(!dummyModel.getBoard().gameIsLost() && !reachedStates.contains(dummyModel.getBoard().getEncodedTiles())) {
+					//Add this state to the known states
+					reachedStates.add(dummyModel.getBoard().getEncodedTiles());
 					theQueue.append(new SolveState(dummyModel.getBoard().getEncodedTiles(), currentState.getMovesToArriveHere() + "U", blankRow+1, blankCol));
 				}
 			}

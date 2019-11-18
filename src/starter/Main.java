@@ -13,13 +13,15 @@ import starter.solver.Solver;
 public class Main {
 
 	public static void main(String[] args) {
-		ConfigurationGenerator cg = new ConfigurationGenerator(3);
-		int[] x = {0,1,2};
-		cg.generatePermutation(x);
+		ConfigurationGenerator cg = new ConfigurationGenerator(9);
+		ConfigurationGenerator parallel = new ConfigurationGenerator(8);
+//		int[] x = {0,1,2, 3, 4, 5, 6, 7, 8};
+//		cg.generatePermutation(x);
 		System.out.println("As above, so below");
 		for(int i = 0; i < 6; i++)
-			System.out.println(cg.printer(cg.nextPerumtation()));
-		
+			System.out.println(parallel.printer(parallel.nextPermutation()));
+		for(int i = 0; i < 0x100; i++)
+			System.out.println(cg.getNextBoardState());
 		
 //		Solver test = new Solver();
 //		System.out.println(test.findSolution(Model.CONFIGURATION_789));
