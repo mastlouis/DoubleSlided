@@ -32,7 +32,7 @@ public class Main {
 		
 		Solver test = new Solver();
 //		System.out.println(test.findSolution(Model.CONFIGURATION_789));
-		for(int i = 0; i < 0x100; i++) {
+		for(int i = 0; i < 362880; i++) {
 			String configuration = cg.getNextBoardState();
 			System.out.println(configuration);
 			System.out.println(test.findSolution(configuration));

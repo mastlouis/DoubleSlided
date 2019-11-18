@@ -107,7 +107,7 @@ public class ConfigurationGenerator {
 	public String getNextBoardState() {
 		String configuration = "";
 		
-		int[] permutation = this.nextValidBoardState();
+		int[] permutation = this.nextValidPermutation();
 		
 		//For each of the nine spaces on the board
 		for(int boardPositionNumber = 0; boardPositionNumber < 9; boardPositionNumber++) {
@@ -123,7 +123,12 @@ public class ConfigurationGenerator {
 					else if(tileIDNumber == 7 || tileIDNumber == 8) configuration += "4,1,";
 					//Add the flip state, then the end of tile symbol
 					if(tileIDNumber != 0) {
-						boolean flip = (this.flipStates & (1<<(8-tileIDNumber))) != 0;
+						boolean flip;
+						//If the front of the tile is a 1 or 3, flip it if it's on an odd square
+						if(tileIDNumber == 1 || tileIDNumber == 2 || tileIDNumber == 5 || tileIDNumber == 6) 
+							flip = boardPositionNumber % 2 == 1;
+						else
+							flip = boardPositionNumber % 2 == 0;
 						if(flip) {configuration += "d";}
 						else {configuration+= "u";}
 					}

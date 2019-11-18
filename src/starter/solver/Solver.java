@@ -17,7 +17,7 @@ public class Solver {
 	
 	public String findSolution(String configuration) {
 		Model dummyModel = new Model(configuration);
-		if(dummyModel.getBoard().isSolvable()) return "no solution";
+		if(!dummyModel.getBoard().isSolvable()) return "no solution";
 		SolveStateQueue theQueue = new SolveStateQueue();
 		int blankRow = dummyModel.getBoard().getRowOfBlank();
 		int blankCol = dummyModel.getBoard().getColOfBlank();
@@ -30,9 +30,9 @@ public class Solver {
 			SolveState currentState = theQueue.next();
 			blankRow = currentState.getBlankSquareRow();
 			blankCol = currentState.getBlankSquareCol();
-			if(currentState.getMovesToArriveHere().length() > longestSoFar){
-				System.out.println("New Longest so far " + ++longestSoFar);
-			}
+//			if(currentState.getMovesToArriveHere().length() > longestSoFar){
+//				System.out.println("New Longest so far " + ++longestSoFar);
+//			}
 			
 			//If there is a tile to move DOWN into the blank space
 			if(
