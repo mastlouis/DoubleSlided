@@ -7,6 +7,7 @@ public class ConfigurationGenerator {
 	int[] elements;
 	int stackPointerSimulator;
 	int flipStates;
+	boolean hasRepeated;
 	
 	public ConfigurationGenerator(int size){
 		this.elements = new int[size];
@@ -18,6 +19,7 @@ public class ConfigurationGenerator {
 		this.stackPointerSimulator = 0;
 		//Will be incremented before use
 		this.flipStates = -1;
+		this.hasRepeated = false;
 	}
 	
 	/**
@@ -91,6 +93,8 @@ public class ConfigurationGenerator {
 		) {
 			this.nextPermutation();
 		}
+		if(this.hasRepeated())
+			this.hasRepeated = true;
 		return this.elements;
 	}
 	
@@ -151,5 +155,22 @@ public class ConfigurationGenerator {
 		forPrinting += "]";
 		
 		return forPrinting;
+	}
+	
+	public boolean hasRepeated() {
+		for(int i = 0; i < this.elements.length; i++)
+			if(elements[i] != i)
+				return false;
+		return true;
+	}
+	
+	public boolean hasResumed() {
+		int[] resumeArray = {7,1,4,0,2,3,6,5,8};
+		for(int i = 0; i < resumeArray.length; i++) {
+			if(this.elements[i] != resumeArray[i]) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

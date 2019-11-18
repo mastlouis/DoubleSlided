@@ -14,7 +14,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		ConfigurationGenerator cg = new ConfigurationGenerator(9);
-		ConfigurationGenerator parallel = new ConfigurationGenerator(8);
+//		ConfigurationGenerator parallel = new ConfigurationGenerator(8);
 		
 //		Model model = new Model(Model.CONFIGURATION_01);
 //		System.out.println(model.getBoard().isSolvable());
@@ -32,11 +32,14 @@ public class Main {
 		
 		Solver test = new Solver();
 //		System.out.println(test.findSolution(Model.CONFIGURATION_789));
-		for(int i = 0; i < 362880; i++) {
+		while(!cg.hasResumed())
+			cg.getNextBoardState();
+		do {
 			String configuration = cg.getNextBoardState();
 			System.out.println(configuration);
-			System.out.println(test.findSolution(configuration));
-		}
+			String solution = test.findSolution(configuration);
+			System.out.println(solution + " length: " + solution.length());
+		} while(!cg.hasRepeated());
 		
 //		Model model = new Model("default");
 //		App app = new App(model);
