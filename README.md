@@ -19,7 +19,12 @@ Course dates: October - December 2019
 
 ## Overview
 
-This project is a game written in Java that launches a GUI using [WindowBuilder](https://www.eclipse.org/windowbuilder/) and [Java Swing](https://docs.oracle.com/javase/8/docs/technotes/guides/swing/index.html). The game consists of eight double-sided tiles in a 3x3 grid. The front (grey side) of each tile has a number between 1 and 4, and the back (black side) has a number that is 5 minus the number on the front. Clicking on a tile adjacent to the blank space will flip the tile over and swap its position with the blank space. If all four of the same number appear at any given time, the player has lost the game.
+This project is a game written in Java that launches a GUI using [WindowBuilder](https://www.eclipse.org/windowbuilder/) and [Java Swing](https://docs.oracle.com/javase/8/docs/technotes/guides/swing/index.html). The game consists of eight double-sided tiles in a 3x3 grid. The front (grey side) of each tile has a number between 1 and 4, and the back (black side) has a number that is 5 minus the number on the front. Clicking on a tile adjacent to the blank space will flip the tile over and swap its position with the blank space. If all four of the same number appear at any given time, the player has lost the game. The player wins if they can get the board into the solution state, as shown by the following table:
+
+| Grey 1  | Grey 2  | Grey 3  |
+| ------- | ------- | ------- |
+| Black 4 |         | Grey 4  |
+| Black 3 | Black 2 | Black 1 |
 
 There are four configurations in which the game can start (01, 234, 56, 789). The game can be reset back to the chosen configuration at any time. There is also a move-counter that tracks how many moves the player has made.
 
@@ -47,11 +52,11 @@ First, a permutation generator generates every permutation of 9 numbers(0-8). I 
 
 | Symbol on Front of Tile | Corresponding Numbers |
 | :---------------------- | :-------------------- |
-| 1                       | 1, 2                  |
-| 2                       | 3, 4                  |
-| 3                       | 5, 6                  |
-| 4                       | 7, 8                  |
-| (Blank Space)           | 9                     |
+| 1                       | 0, 1                  |
+| 2                       | 2, 3                  |
+| 3                       | 4, 5                  |
+| 4                       | 6, 7                  |
+| (Blank Space)           | 8                     |
 
 The permutation generated corresponds to the positions in which the tiles will be placed on the board. The first number is the top left square, the second number is the top middle square, and so on. Each pair of numbers that correspond to the same tile must be in ascending order form left to right, or the permutation will be discarded as a duplicate.
 
